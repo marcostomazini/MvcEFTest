@@ -47,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manufacturer.cs" />
+    <Compile Include="Migrations\201409111519097_Initial.cs" />
+    <Compile Include="Migrations\201409111519097_Initial.Designer.cs">
+      <DependentUpon>201409111519097_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MvcEFTestContext.cs" />
     <Compile Include="Phone.cs" />
     <Compile Include="User.cs" />
@@ -55,6 +60,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201409111519097_Initial.resx">
+      <DependentUpon>201409111519097_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
