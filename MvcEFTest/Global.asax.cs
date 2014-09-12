@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Reflection;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using AutoMapper;
+using MvcEFTest.Utilities;
 
 namespace MvcEFTest
 {
@@ -16,6 +17,17 @@ namespace MvcEFTest
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Mapper.Initialize(
+                config =>
+                Assembly.GetExecutingAssembly()
+                        .GetTypes()
+                        .Where(
+                            type =>
+                            typeof(Profile).IsAssignableFrom(type) && type.GetConstructor(Type.EmptyTypes) != null)
+                        .Select(Activator.CreateInstance)
+                        .Cast<Profile>()
+                        .ForEach(config.AddProfile));
         }
     }
 }

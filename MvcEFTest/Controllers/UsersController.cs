@@ -1,8 +1,12 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MvcEFTest.Entities;
+using MvcEFTest.Views;
 
 namespace MvcEFTest.Controllers
 {
@@ -25,7 +29,9 @@ namespace MvcEFTest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = await _db.Users.FindAsync(id);
+            var user = await (from u in _db.Users
+                              where u.Id == id
+                              select u).Project().To<UserViewModel>().SingleOrDefaultAsync();
             if (user == null)
             {
                 return HttpNotFound();
@@ -65,7 +71,9 @@ namespace MvcEFTest.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            User user = await _db.Users.FindAsync(id);
+            UserViewModel user = await (from u in _db.Users
+                                        where u.Id == id
+                                        select u).Project().To<UserViewModel>().SingleOrDefaultAsync();
             if (user == null)
             {
                 return HttpNotFound();
@@ -79,14 +87,18 @@ namespace MvcEFTest.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Income")] User user)
+        public async Task<ActionResult> Edit(UserViewModel user)
         {
             if (!ModelState.IsValid)
             {
                 return View(user);
             }
 
-            _db.Entry(user).State = EntityState.Modified;
+            User model = await (from u in _db.Users where u.Id == user.Id select u).SingleOrDefaultAsync();
+
+            Mapper.Map(user, model);
+
+            _db.Entry(model).State = EntityState.Modified;
             await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
