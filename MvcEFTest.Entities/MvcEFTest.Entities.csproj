@@ -51,6 +51,10 @@
     <Compile Include="Migrations\201409111519097_Initial.Designer.cs">
       <DependentUpon>201409111519097_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201409121505509_DateTime2Config.cs" />
+    <Compile Include="Migrations\201409121505509_DateTime2Config.Designer.cs">
+      <DependentUpon>201409121505509_DateTime2Config.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="MvcEFTestContext.cs" />
     <Compile Include="Phone.cs" />
@@ -64,6 +68,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201409111519097_Initial.resx">
       <DependentUpon>201409111519097_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201409121505509_DateTime2Config.resx">
+      <DependentUpon>201409121505509_DateTime2Config.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

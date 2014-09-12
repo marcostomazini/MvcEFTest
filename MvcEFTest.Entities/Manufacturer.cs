@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace MvcEFTest.Entities
 
         [Required]
         public string Name { get; set; }
+
+        public DbGeography HeadquartersLocation { get; set; }
 
         public virtual ICollection<Phone> Phones
         {
