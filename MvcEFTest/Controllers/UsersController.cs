@@ -133,6 +133,11 @@ namespace MvcEFTest.Controllers
 
         protected override void Dispose(bool disposing)
         {
+            if (_disposed)
+            {
+                return;
+            }
+
             if (disposing)
             {
                 _db.Dispose();
