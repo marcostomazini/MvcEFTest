@@ -13,7 +13,7 @@ namespace MvcEFTest.Entities.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201409111519097_Initial"; }
+            get { return "201409151421398_Initial"; }
         }
         
         string IMigrationMetadata.Source

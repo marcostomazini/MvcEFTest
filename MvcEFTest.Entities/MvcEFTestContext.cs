@@ -6,8 +6,6 @@ namespace MvcEFTest.Entities
 {
     public class MvcEFTestContext : DbContext
     {
-        public DbSet<Manufacturer> Manufacturers { get; set; }
-
         public DbSet<Phone> Phones { get; set; }
 
         public DbSet<User> Users { get; set; }
