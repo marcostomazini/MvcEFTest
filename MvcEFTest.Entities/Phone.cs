@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MvcEFTest.Entities
 {
-    public class Phone : EntityBase
+    public class Phone : EntityBase<Phone>
     {
         public int UserId { get; set; }
 

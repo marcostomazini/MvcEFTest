@@ -6,6 +6,11 @@ namespace MvcEFTest.ValueResolvers
 {
     public static class ReflectionHelpers
     {
+        public static string GetPropertyPath<TObj, TRet>(this TObj obj, Expression<Func<TObj, TRet>> expr)
+        {
+            return ExpressionOperator.GetPropertyPath(expr);
+        }
+
         public static object GetPropertyValue(this object obj, string propertyPath)
         {
             object propertyValue = null;
@@ -38,35 +43,6 @@ namespace MvcEFTest.ValueResolvers
             var objType = obj.GetType();
             var propertyValue = objType.GetProperty(propertyPath).GetValue(obj, null);
             return (TRet)propertyValue;
-        }
-
-        public static MemberExpression GetMemberExpression(Expression expression)
-        {
-            var expression1 = expression as MemberExpression;
-            if (expression1 != null)
-            {
-                return expression1;
-            }
-
-            if (!(expression is LambdaExpression))
-            {
-                return null;
-            }
-
-            var lambdaExpression = expression as LambdaExpression;
-            var memberExpression = lambdaExpression.Body as MemberExpression;
-            if (memberExpression != null)
-            {
-                return memberExpression;
-            }
-
-            var body = lambdaExpression.Body as UnaryExpression;
-            if (body != null)
-            {
-                return (MemberExpression)body.Operand;
-            }
-
-            return null;
         }
     }
 }

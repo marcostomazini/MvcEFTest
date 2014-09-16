@@ -9,13 +9,6 @@ namespace MvcEFTest.ValueResolvers
 {
     public static class ExpressionOperator
     {
-        public static string GetPropertyPath<TObj, TRet>(
-            this TObj obj,
-            Expression<Func<TObj, TRet>> expr)
-        {
-            return GetPropertyPath(expr);
-        }
-
         public static string GetPropertyPath(Expression expr)
         {
             var path = new StringBuilder();
@@ -48,16 +41,16 @@ namespace MvcEFTest.ValueResolvers
             }
 
             var lambdaExpression = expression as LambdaExpression;
-            var body = lambdaExpression.Body as MemberExpression;
-            if (body != null)
+            var bodyMemberExpression = lambdaExpression.Body as MemberExpression;
+            if (bodyMemberExpression != null)
             {
-                return body;
+                return bodyMemberExpression;
             }
 
-            var unaryExpression = lambdaExpression.Body as UnaryExpression;
-            if (unaryExpression != null)
+            var bodyUnaryExpression = lambdaExpression.Body as UnaryExpression;
+            if (bodyUnaryExpression != null)
             {
-                return (MemberExpression)unaryExpression.Operand;
+                return (MemberExpression)bodyUnaryExpression.Operand;
             }
 
             return null;

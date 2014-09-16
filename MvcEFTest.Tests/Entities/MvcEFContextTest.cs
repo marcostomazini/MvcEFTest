@@ -6,6 +6,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MvcEFTest.Entities;
 using MvcEFTest.Models;
+using MvcEFTest.ValueResolvers;
 using MvcEFTest.Views;
 using Xunit;
 
@@ -23,7 +24,12 @@ namespace MvcEFTest.Tests.Entities
 
         public MvcEFContextTest()
         {
-            Mapper.CreateMap<UserViewModel, User>().ReverseMap();
+            Mapper.CreateMap<UserViewModel, User>()
+                  .ForMember(m => m.Phones,
+                             opt =>
+                             opt.ResolveUsing(
+                                 new EntityCollectionValueResolver<UserViewModel, PhoneViewModel, Phone>(vm => vm.Phones)))
+                  .ReverseMap();
             Mapper.CreateMap<PhoneViewModel, Phone>().ReverseMap();
         }
             
@@ -90,8 +96,8 @@ namespace MvcEFTest.Tests.Entities
                 Mapper.Map(viewModel, model);
 
                 Assert.Equal(EntityState.Modified, context.Entry(model).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[0]).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[1]).State);
+                Assert.Equal(EntityState.Unchanged, context.Entry(model.Phones.ToList()[0]).State);
+                Assert.Equal(EntityState.Unchanged, context.Entry(model.Phones.ToList()[1]).State);
             }
         }
 
@@ -107,8 +113,8 @@ namespace MvcEFTest.Tests.Entities
                 Mapper.Map(viewModel, model);
 
                 Assert.Equal(EntityState.Unchanged, context.Entry(model).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[0]).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[1]).State);
+                Assert.Equal(EntityState.Unchanged, context.Entry(model.Phones.ToList()[0]).State);
+                Assert.Equal(EntityState.Modified, context.Entry(model.Phones.ToList()[1]).State);
             }
         }
 
@@ -124,8 +130,8 @@ namespace MvcEFTest.Tests.Entities
                 Mapper.Map(viewModel, model);
 
                 Assert.Equal(EntityState.Modified, context.Entry(model).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[0]).State);
-                Assert.Equal(EntityState.Added, context.Entry(model.Phones.ToList()[1]).State);
+                Assert.Equal(EntityState.Unchanged, context.Entry(model.Phones.ToList()[0]).State);
+                Assert.Equal(EntityState.Modified, context.Entry(model.Phones.ToList()[1]).State);
             }
         }
 
