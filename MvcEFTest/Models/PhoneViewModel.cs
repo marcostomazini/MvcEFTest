@@ -7,10 +7,8 @@ using MvcEFTest.Views;
 
 namespace MvcEFTest.Models
 {
-    public class PhoneViewModel
+    public class PhoneViewModel : ViewModelBase
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public string AndroidVersion { get; set; }

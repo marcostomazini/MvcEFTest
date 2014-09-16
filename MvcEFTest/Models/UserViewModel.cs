@@ -3,10 +3,8 @@ using MvcEFTest.Models;
 
 namespace MvcEFTest.Views
 {
-    public class UserViewModel
+    public class UserViewModel : ViewModelBase
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public IEnumerable<PhoneViewModel> Phones { get; set; }

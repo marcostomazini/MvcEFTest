@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace MvcEFTest.Entities
 {
-    public class User
+    public class User : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         public string Name { get; set; }
 
