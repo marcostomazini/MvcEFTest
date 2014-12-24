@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MvcEFTest.Entities;
@@ -406,6 +407,22 @@ namespace MvcEFTest.Tests.Entities
                     secondContext.Entry(phone).State = EntityState.Detached;
                     oldVersion.Phones.Add(phone);
                 }
+            }
+        }
+
+        [Fact]
+        public void Test()
+        {
+            using (var context = new MvcEFTestContext())
+            {
+                var user = context.Users.Find(1);
+                var userViewModel = new PhoneViewModel { Id = 1, Name = "Samsung S5" };
+
+                var phoneEntry = context.Entry(user.Phones.ToList()[0]);
+                phoneEntry.CurrentValues.SetValues(userViewModel);
+
+                Assert.Equal("Samsung S5", phoneEntry.Property(p => p.Name).CurrentValue);
+                Assert.Equal("5.0", phoneEntry.Property(p => p.AndroidVersion).CurrentValue);
             }
         }
 
